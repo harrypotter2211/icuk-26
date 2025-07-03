@@ -1,17 +1,17 @@
-# Use a secure and public Java 8 Alpine-based image
+# Use a secure and small Java 8 JRE base image
 FROM eclipse-temurin:8-jre-alpine
 
-# Create a volume for temporary files
+# Create a volume for temporary files (used by Spring Boot for /tmp)
 VOLUME /tmp
 
-# Copy your JAR file into the image
+# Copy the built Spring Boot JAR into the container
 ADD target/account-service-0.0.1-SNAPSHOT.jar account-service.jar
 
-# Create a dummy file to ensure timestamp-related consistency (optional)
+# Optional: Update timestamp to prevent issues with Spring Boot caching
 RUN sh -c 'touch /account-service.jar'
 
-# Set the entrypoint to run the JAR
+# Set the default command to run your Spring Boot app
 ENTRYPOINT ["java", "-Djava.security.egd=file:/dev/./urandom", "-jar", "/account-service.jar"]
 
-# Expose the application port
+# Expose the port the app runs on
 EXPOSE 8083
