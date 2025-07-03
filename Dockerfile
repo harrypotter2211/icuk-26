@@ -5,7 +5,7 @@ FROM eclipse-temurin:8-jre-alpine
 VOLUME /tmp
 
 # Copy the built Spring Boot JAR into the container
-ADD target/account-service-0.0.1-SNAPSHOT.jar account-service.jar
+COPY target/account-service-0.0.1-SNAPSHOT.jar account-service.jar
 
 # Optional: Update timestamp to prevent issues with Spring Boot caching
 RUN sh -c 'touch /account-service.jar'
